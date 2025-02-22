@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../responsive_layout.dart';
 
 class BannerWidget extends StatelessWidget {
+  const BannerWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     Widget theBigBox(List<Widget> widgets) => Card(

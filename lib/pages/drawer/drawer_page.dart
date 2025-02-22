@@ -31,6 +31,8 @@ List<ButtonsInfo> _buttonNames = [
 ];
 
 class DrawerPage extends StatefulWidget {
+  const DrawerPage({super.key});
+
   @override
   _DrawerPageState createState() => _DrawerPageState();
 }
@@ -72,8 +74,8 @@ class _DrawerPageState extends State<DrawerPage> {
                               borderRadius: BorderRadius.circular(20),
                               gradient: LinearGradient(
                                 colors: [
-                                  Constants.red.withOpacity(0.9),
-                                  Constants.orange.withOpacity(0.9),
+                                  Constants.red.withValues(alpha: 0.9),
+                                  Constants.orange.withValues(alpha: 0.9),
                                 ],
                               ),
                             )

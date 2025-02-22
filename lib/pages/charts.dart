@@ -1,9 +1,10 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import '../../../constants.dart';
 
 class Chart extends StatelessWidget {
+  const Chart({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -248,13 +249,13 @@ class Indicator extends StatelessWidget {
   final Color textColor;
 
   const Indicator({
-    Key? key,
+    super.key,
     required this.color,
     required this.text,
     required this.isSquare,
     this.size = 16,
     this.textColor = Colors.white70,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -340,7 +341,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
                   style: TextStyle(
                       fontSize: 12,
                       color: showAvg
-                          ? Colors.white.withOpacity(0.5)
+                          ? Colors.white.withValues(alpha: 0.5)
                           : Colors.white),
                 ),
               ),
@@ -475,7 +476,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             show: true,
             gradient: LinearGradient(
               colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
+                  .map((color) => color.withValues(alpha: 0.3))
                   .toList(),
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -618,10 +619,10 @@ class _LineChartSample2State extends State<LineChartSample2> {
               colors: [
                 ColorTween(begin: gradientColors[0], end: gradientColors[1])
                     .lerp(0.2)!
-                    .withOpacity(0.1),
+                    .withValues(alpha: 0.1),
                 ColorTween(begin: gradientColors[0], end: gradientColors[1])
                     .lerp(0.2)!
-                    .withOpacity(0.1),
+                    .withValues(alpha: 0.1),
               ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -1360,7 +1361,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 10,
-          color: Colors.white.withOpacity(0.4),
+          color: Colors.white.withValues(alpha: 0.4),
         ),
         const SizedBox(
           width: space,
@@ -1368,7 +1369,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 28,
-          color: Colors.white.withOpacity(0.8),
+          color: Colors.white.withValues(alpha: 0.8),
         ),
         const SizedBox(
           width: space,
@@ -1376,7 +1377,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 42,
-          color: Colors.white.withOpacity(1),
+          color: Colors.white.withValues(alpha: 1),
         ),
         const SizedBox(
           width: space,
@@ -1384,7 +1385,7 @@ class BarChartSample2State extends State<BarChartSample2> {
         Container(
           width: width,
           height: 28,
-          color: Colors.white.withOpacity(0.8),
+          color: Colors.white.withValues(alpha: 0.8),
         ),
         const SizedBox(
           width: space,

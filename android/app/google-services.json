@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "735018522693",
+    "project_id": "market-59f63",
+    "storage_bucket": "market-59f63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735018522693:android:6e1a40d7508a2669406b2c",
+        "android_client_info": {
+          "package_name": "heshamkamal422.shopping.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735018522693-6r56iujin8bd0n3007r6vu0cvdun6v7a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "heshamkamal422.shopping.com",
+            "certificate_hash": "be4bdc9d52df4fa86b3ca7d3220ae11a3123e909"
+          }
+        },
+        {
+          "client_id": "735018522693-bbf3mhhrb0g0qqv5nt7a7vfbfjua0962.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUbHW6huOHE95o6FazW1aKoQzKCpV6lLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735018522693-bbf3mhhrb0g0qqv5nt7a7vfbfjua0962.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735018522693:android:5452f1a91258c291406b2c",
+        "android_client_info": {
+          "package_name": "heshamkamal422.shopping.panel.admin.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735018522693-bbf3mhhrb0g0qqv5nt7a7vfbfjua0962.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUbHW6huOHE95o6FazW1aKoQzKCpV6lLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735018522693-bbf3mhhrb0g0qqv5nt7a7vfbfjua0962.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

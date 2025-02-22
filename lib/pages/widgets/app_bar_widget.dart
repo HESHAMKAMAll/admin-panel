@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import '../../responsive_layout.dart';
+import 'order_notification_badge.dart';
 
 List _buttonNames = ["Overview", "Revenue", "Sales", "Control"];
 int _currentSelectedButton = 0;
 
 class AppBarWidget extends StatefulWidget {
+  const AppBarWidget({super.key});
+
   @override
   _AppBarWidgetState createState() => _AppBarWidgetState();
 }
@@ -50,12 +53,12 @@ class _AppBarWidgetState extends State<AppBarWidget> {
           if (ResponsiveLayout.isComputer(context))
             OutlinedButton(
               onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white, side: BorderSide(color: Colors.white, width: 0.4)),
               child: Padding(
                 padding: const EdgeInsets.all(Constants.kPadding / 2),
                 child: Text("Admin Panel"),
               ),
-              style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white, side: BorderSide(color: Colors.white, width: 0.4)),
             ),
           Spacer(),
           if (ResponsiveLayout.isComputer(context))
@@ -137,28 +140,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             onPressed: () {},
             icon: Icon(Icons.search),
           ),
-          Stack(
-            children: [
-              IconButton(
-                color: Colors.white,
-                iconSize: 30,
-                onPressed: () {},
-                icon: Icon(Icons.notifications_none_outlined),
-              ),
-              Positioned(
-                right: 6,
-                top: 6,
-                child: CircleAvatar(
-                  backgroundColor: Colors.pink,
-                  radius: 8,
-                  child: Text(
-                    "3",
-                    style: TextStyle(fontSize: 10, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          OrderNotificationBadge(),
           if (!ResponsiveLayout.isPhone(context))
             Container(
               margin: EdgeInsets.all(Constants.kPadding),

@@ -6,30 +6,30 @@ import 'package:shopping_panel/pages/panel_left/panel_left_page.dart';
 import 'package:shopping_panel/pages/panel_right/panel_right_page.dart';
 import 'package:shopping_panel/pages/widgets/app_bar_widget.dart';
 import 'package:shopping_panel/responsive_layout.dart';
-
 import 'constants.dart';
 
 class WidgetTree extends StatefulWidget {
+  const WidgetTree({super.key});
+
   @override
   _WidgetTreeState createState() => _WidgetTreeState();
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  int currentIndex = 1;
+  int currentIndex = 0;
 
-  List<Widget> _icons = [
-    Icon(Icons.add, size: 30),
+  final List<Widget> _icons = [
+    Icon(Icons.home_filled, size: 30),
     Icon(Icons.list, size: 30),
-    Icon(Icons.compare_arrows, size: 30),
+    Icon(Icons.add_business, size: 30),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      appBar: currentIndex == 2? null : PreferredSize(
         preferredSize: Size(double.infinity, 100),
-        child: (ResponsiveLayout.isTinyLimit(context) ||
-                ResponsiveLayout.isTinyHeightLimit(context))
+        child: (ResponsiveLayout.isTinyLimit(context) || ResponsiveLayout.isTinyHeightLimit(context))
             ? Container()
             : AppBarWidget(),
       ),
@@ -39,7 +39,7 @@ class _WidgetTreeState extends State<WidgetTree> {
             ? PanelLeftPage()
             : currentIndex == 1
                 ? PanelCenterPage()
-                : PanelRightPage(),
+                : AdminOrdersScreen(),
         tablet: Row(
           children: [
             Expanded(child: PanelLeftPage()),
@@ -53,7 +53,7 @@ class _WidgetTreeState extends State<WidgetTree> {
             Expanded(child: PanelLeftPage()),
             Expanded(child: PanelCenterPage()),
             Expanded(
-              child: PanelRightPage(),
+              child: AdminOrdersScreen(),
             )
           ],
         ),
@@ -65,7 +65,7 @@ class _WidgetTreeState extends State<WidgetTree> {
               child: PanelCenterPage(),
             ),
             Expanded(
-              child: PanelRightPage(),
+              child: AdminOrdersScreen(),
             )
           ],
         ),
