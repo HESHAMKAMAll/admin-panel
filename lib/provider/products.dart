@@ -41,27 +41,108 @@ class Products with ChangeNotifier {
     fetchBrandsRealtime();
   }
 
+
   void fetchProductsRealtime() {
     _firestore.collection('products').snapshots().listen((event) {
-      _products.clear(); // تفريغ القائمة قبل تحديثها
+      _products.clear();
 
       for (var doc in event.docs) {
+        // Parse the timestamp from Firestore
+        DateTime createdAt = (doc['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now();
+
         _products.add(Product(
           id: doc.id,
           title: doc['title'],
           description: doc['description'],
           price: doc['price'].toDouble(),
-          imageUrls: List<String>.from(doc['imageUrls']), // جلب قائمة الصور
+          imageUrls: List<String>.from(doc['imageUrls']),
           brand: doc['brand'],
           productCategoryName: doc['productCategoryName'],
           quantity: doc['quantity'],
           isPopular: doc['isPopular'],
           isFavorite: doc['isFavorite'],
+          createdAt: createdAt, // Add the timestamp
         ));
       }
-      notifyListeners(); // تحديث الواجهة
+      notifyListeners();
     });
   }
+
+  Future<void> uploadProduct({
+    required String title,
+    required String description,
+    required double price,
+    required List<String> imageUrls,
+    String brand = '',
+    required String category,
+    required int quantity,
+    bool isPopular = false,
+  }) async
+  {
+    try {
+      if (!_categories.any((cat) => cat.categoryName == category)) {
+        throw Exception('⚠ الفئة غير موجودة في النظام.');
+      }
+
+      final productData = {
+        'title': title,
+        'description': description,
+        'price': price,
+        'imageUrls': imageUrls,
+        'brand': brand,
+        'productCategoryName': category,
+        'quantity': quantity,
+        'isPopular': isPopular,
+        'isFavorite': false,
+        'createdAt': FieldValue.serverTimestamp(), // Add server timestamp
+      };
+
+      final docRef = await _firestore.collection('products').add(productData);
+
+      final newProduct = Product(
+        id: docRef.id,
+        title: title,
+        description: description,
+        price: price,
+        imageUrls: imageUrls,
+        brand: brand,
+        productCategoryName: category,
+        quantity: quantity,
+        isPopular: isPopular,
+        isFavorite: false,
+        createdAt: DateTime.now(), // Use current time for local object
+      );
+
+      _products.add(newProduct);
+      notifyListeners();
+    } catch (error) {
+      print("❌ حدث خطأ أثناء رفع المنتج: $error");
+      throw Exception("❌ لم يتم رفع المنتج، حاول مرة أخرى.");
+    }
+  }
+
+  //
+  // void fetchProductsRealtime() {
+  //   _firestore.collection('products').snapshots().listen((event) {
+  //     _products.clear(); // تفريغ القائمة قبل تحديثها
+  //
+  //     for (var doc in event.docs) {
+  //       _products.add(Product(
+  //         id: doc.id,
+  //         title: doc['title'],
+  //         description: doc['description'],
+  //         price: doc['price'].toDouble(),
+  //         imageUrls: List<String>.from(doc['imageUrls']), // جلب قائمة الصور
+  //         brand: doc['brand'],
+  //         productCategoryName: doc['productCategoryName'],
+  //         quantity: doc['quantity'],
+  //         isPopular: doc['isPopular'],
+  //         isFavorite: doc['isFavorite'],
+  //       ));
+  //     }
+  //     notifyListeners(); // تحديث الواجهة
+  //   });
+  // }
 
   Product? findById(String id) {
     try {
@@ -295,60 +376,60 @@ class Products with ChangeNotifier {
         .toList();
   }
 
-  Future<void> uploadProduct({
-    required String title,
-    required String description,
-    required double price,
-    required List<String> imageUrls,
-    String brand = '',
-    required String category,
-    required int quantity,
-    bool isPopular = false,
-  }) async
-  {
-    try {
-      // التحقق من أن الفئة موجودة في _categories
-      if (!_categories.any((cat) => cat.categoryName == category)) {
-        throw Exception('⚠ الفئة غير موجودة في النظام.');
-      }
-
-      // إنشاء كائن المنتج بدون ID مؤقت
-      final productData = {
-        'title': title,
-        'description': description,
-        'price': price,
-        'imageUrls': imageUrls,
-        'brand': brand,
-        'productCategoryName': category,
-        'quantity': quantity,
-        'isPopular': isPopular,
-        'isFavorite': false,
-      };
-
-      // رفع المنتج إلى Firestore داخل مجموعة 'products'
-      final docRef = await _firestore.collection('products').add(productData);
-
-      // إنشاء كائن المنتج محليًا مع ID الحقيقي من Firestore
-      final newProduct = Product(
-        id: docRef.id, // استخدم ID الذي أنشأه Firestore
-        title: title,
-        description: description,
-        price: price,
-        imageUrls: imageUrls,
-        brand: brand,
-        productCategoryName: category,
-        quantity: quantity,
-        isPopular: isPopular,
-        isFavorite: false,
-      );
-
-      // إضافة المنتج إلى القائمة المحلية
-      _products.add(newProduct);
-      notifyListeners(); // تحديث الواجهة بعد الإضافة
-    } catch (error) {
-      print("❌ حدث خطأ أثناء رفع المنتج: $error");
-      throw Exception("❌ لم يتم رفع المنتج، حاول مرة أخرى.");
-    }
-  }
+  // Future<void> uploadProduct({
+  //   required String title,
+  //   required String description,
+  //   required double price,
+  //   required List<String> imageUrls,
+  //   String brand = '',
+  //   required String category,
+  //   required int quantity,
+  //   bool isPopular = false,
+  // }) async
+  // {
+  //   try {
+  //     // التحقق من أن الفئة موجودة في _categories
+  //     if (!_categories.any((cat) => cat.categoryName == category)) {
+  //       throw Exception('⚠ الفئة غير موجودة في النظام.');
+  //     }
+  //
+  //     // إنشاء كائن المنتج بدون ID مؤقت
+  //     final productData = {
+  //       'title': title,
+  //       'description': description,
+  //       'price': price,
+  //       'imageUrls': imageUrls,
+  //       'brand': brand,
+  //       'productCategoryName': category,
+  //       'quantity': quantity,
+  //       'isPopular': isPopular,
+  //       'isFavorite': false,
+  //     };
+  //
+  //     // رفع المنتج إلى Firestore داخل مجموعة 'products'
+  //     final docRef = await _firestore.collection('products').add(productData);
+  //
+  //     // إنشاء كائن المنتج محليًا مع ID الحقيقي من Firestore
+  //     final newProduct = Product(
+  //       id: docRef.id, // استخدم ID الذي أنشأه Firestore
+  //       title: title,
+  //       description: description,
+  //       price: price,
+  //       imageUrls: imageUrls,
+  //       brand: brand,
+  //       productCategoryName: category,
+  //       quantity: quantity,
+  //       isPopular: isPopular,
+  //       isFavorite: false,
+  //     );
+  //
+  //     // إضافة المنتج إلى القائمة المحلية
+  //     _products.add(newProduct);
+  //     notifyListeners(); // تحديث الواجهة بعد الإضافة
+  //   } catch (error) {
+  //     print("❌ حدث خطأ أثناء رفع المنتج: $error");
+  //     throw Exception("❌ لم يتم رفع المنتج، حاول مرة أخرى.");
+  //   }
+  // }
 
 }

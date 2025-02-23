@@ -143,6 +143,7 @@ class ProductUploadProvider with ChangeNotifier {
         isPopular: isPopular,
         ratings: {},
         firebaseAverageRating: 0.0,
+        createdAt: DateTime.now(),
       );
 
       // 5. Convert Product object to Map
@@ -159,6 +160,7 @@ class ProductUploadProvider with ChangeNotifier {
         'isFavorite': newProduct.isFavorite,
         'ratings': newProduct.ratings,
         'averageRating': newProduct.firebaseAverageRating,
+        'createdAt': FieldValue.serverTimestamp(),
       };
 
       // 6. Upload data to Firestore

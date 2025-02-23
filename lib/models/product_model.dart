@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+// تأكد من أن فئة Product لديها حقل للتقييمات بشكل صحيح
 class Product with ChangeNotifier {
   final String id;
   final String title;
@@ -13,6 +14,7 @@ class Product with ChangeNotifier {
   final bool isPopular;
   final Map<String, double> ratings;
   final double? firebaseAverageRating;
+  final DateTime createdAt; // New field
 
   Product({
     required this.id,
@@ -27,7 +29,13 @@ class Product with ChangeNotifier {
     required this.isPopular,
     this.ratings = const {},
     this.firebaseAverageRating,
-  });
+    DateTime? createdAt, // Optional parameter
+  }): this.createdAt = createdAt ?? DateTime.now(); // Default to current time if not provided
+
+  bool get isNew {
+    final difference = DateTime.now().difference(createdAt);
+    return difference.inDays <= 7; // Consider product new if less than 7 days old
+  }
 
   double get averageRating {
     if (firebaseAverageRating != null) return firebaseAverageRating!;
